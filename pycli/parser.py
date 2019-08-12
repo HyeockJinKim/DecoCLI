@@ -5,7 +5,15 @@ class Parser:
     def __init__(self):
         self.commands = {}
         self.params = {}
-        self.cli = argv
+        self.cli = argv[1:]
+        self.func = None
+
+    def parse(self):
+        for cmd in self.cli:
+            try:
+                self.func = self.commands[cmd]
+            except:
+                pass
 
     def set_param(self, name, param):
         self.params[name] = param
@@ -14,9 +22,9 @@ class Parser:
         self.commands[name] = cmd
 
     def add_param(self, name, param):
-        if self.params[name]:
-            self.params[name] = param
-        else:
+        try:
+            self.params[name].append(param)
+        except:
             self.params[name] = list(self.params[name])
             self.params[name].append(param)
 
@@ -30,4 +38,3 @@ class Parser:
             except:
                 self.params[name] = list(self.params[name])
                 self.params[name].append(param)
-
