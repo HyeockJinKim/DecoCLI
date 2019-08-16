@@ -1,16 +1,12 @@
 
 class Param:
-    def __init__(self, _type=None, _len=0):
+    def __init__(self, _type=None, _len=1):
         self.type = _type
         self.len = _len
-        self.val = None
+        self.val = []
 
     def add_val(self, _val):
-        if self.val:
-            try:
-                self.val.append(_val)
-            except:
-                self.val = list(self.val)
-                self.val.append(_val)
-        else:
-            self.val = _val
+        if len(self.val) >= self.len:
+            return
+
+        self.val.append(_val)
