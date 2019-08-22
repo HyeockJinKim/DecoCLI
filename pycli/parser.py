@@ -1,40 +1,51 @@
 from sys import argv
 
+from pycli.cmd import Command
+from pycli.param import Param
+
 
 class Parser:
     def __init__(self):
         self.commands = {}
         self.params = {}
-        self.cli = argv[1:]
-        self.func = None
 
-    def parse(self):
-        for cmd in self.cli:
-            try:
-                self.func = self.commands[cmd]
-            except:
-                pass
+        def _cli():
+            for cmd in argv[1:]:
+                yield cmd
 
-    def set_param(self, name, param):
-        self.params[name] = param
+        self.cli = _cli()
 
-    def set_cmd(self, name, cmd):
+    def set_cmd(self, name: str, cmd: Command):
         self.commands[name] = cmd
 
-    def add_param(self, name, param):
-        try:
-            self.params[name].append(param)
-        except:
-            self.params[name] = list(self.params[name])
-            self.params[name].append(param)
+    def set_param(self, name: str, _param: Param):
+        self.params[name] = _param
 
-    def add_params(self, name, params):
-        if params is None:
-            params = []
-
-        for param in params:
+    def parse(self):
+        funcs = []
+        params = {}
+        cli = self.cli
+        while True:
             try:
-                self.params[name].append(param)
-            except:
-                self.params[name] = list(self.params[name])
-                self.params[name].append(param)
+                cmd = next(cli)
+            except StopIteration:
+                break
+
+            try:
+                funcs.append(self.commands[cmd])
+            except KeyError:
+                try:
+                    param_len = self.params[cmd].len
+                    param_name = self.params[cmd].name
+                    params[param_name] = []
+                    for i in range(param_len):
+                        try:
+                            params[param_name].append(next(cli))
+                        except StopIteration:
+                            print('This param ', cmd, " don't have enough param.")
+                            exit(-1)
+                except KeyError:
+                    print('This keyword "', cmd, '" is not set for your CLI.')
+                    exit(-1)
+
+        return funcs, params
