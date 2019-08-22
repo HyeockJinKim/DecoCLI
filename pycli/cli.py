@@ -9,10 +9,9 @@ class PyCLI:
 
     def set_cmd(self, name: str, _len=0):
         def _func(func):
+            cmd = Command(func, _len)
+            self.parser.set_cmd(name, cmd)
             return func
-
-        cmd = Command(_func, _len)
-        self.parser.set_cmd(name, cmd)
         return _func
 
     def set_param(self, name: str, key: str, _len=0):

@@ -4,9 +4,9 @@ class Command:
         self.func = _func
         self.len = _len
 
-    def exec(self, params):
+    def exec(self, params=None):
         try:
-            self.func(kwargs=params)
+            return self.func()
         except TypeError:
             print('This Command has problem')
             exit(-1)
