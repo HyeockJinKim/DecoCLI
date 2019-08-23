@@ -20,6 +20,8 @@ class PyCLI:
 
     def exec(self):
         funcs, params = self.parser.parse()
-
+        results = []
         for func in funcs:
-            func.exec(params)
+            results.append(func.exec(params))
+
+        return results

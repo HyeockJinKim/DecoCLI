@@ -37,10 +37,15 @@ class Parser:
                 try:
                     param_len = self.params[cmd].len
                     param_name = self.params[cmd].name
-                    params[param_name] = []
+                    if param_len > 1:
+                        params[param_name] = []
+
                     for i in range(param_len):
                         try:
-                            params[param_name].append(next(cli))
+                            if param_len > 1:
+                                params[param_name].append(next(cli))
+                            else:
+                                params[param_name] = next(cli)
                         except StopIteration:
                             print('This param ', cmd, " don't have enough param.")
                             exit(-1)
