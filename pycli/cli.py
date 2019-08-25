@@ -24,4 +24,7 @@ class PyCLI:
         for func in funcs:
             results.append(func.exec(params))
 
+        if len(results) == 1:
+            return results[0]
+
         return results

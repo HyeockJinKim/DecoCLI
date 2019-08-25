@@ -32,7 +32,7 @@ class TestPyCLI(unittest.TestCase):
         a.append('version')
         result = self.py_cli.exec()
         
-        self.assertEqual(['Version 0.01'], result, 'Exec Test')
+        self.assertEqual('Version 0.01', result, 'Exec Test')
 
     def test_params(self):
         a = argv
@@ -41,7 +41,7 @@ class TestPyCLI(unittest.TestCase):
         a.append('pyCLI')
         result = self.py_cli.exec()
 
-        self.assertEqual(['pyCLI'], result, 'Command with Param Test')
+        self.assertEqual('pyCLI', result, 'Command with Param Test')
 
 
 if __name__ == '__main__':
