@@ -1,3 +1,3 @@
-pycli for CLI Program
+DecoCLI for CLI Program
 
 Simple module for CLI in python
