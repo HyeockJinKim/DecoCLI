@@ -3,3 +3,8 @@
 .idea/*
 venv/*
 *.iml
+
+# Ignore folder for deploying package
+build/
+decocli.egg-info/
+dist/

@@ -1,7 +1,7 @@
 from sys import argv
 
-from pycli.cmd import Command
-from pycli.param import Param
+from decocli.cmd import Command
+from decocli.param import Param
 
 
 class Parser:

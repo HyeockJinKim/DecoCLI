@@ -1,6 +1,6 @@
-from pycli.cmd import Command
-from pycli.param import Param
-from pycli.parser import Parser
+from decocli.cmd import Command
+from decocli.param import Param
+from decocli.parser import Parser
 
 
 class PyCLI:

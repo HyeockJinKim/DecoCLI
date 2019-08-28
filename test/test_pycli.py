@@ -1,7 +1,7 @@
 import unittest
 from sys import argv
 
-from pycli.cli import PyCLI
+from decocli.cli import PyCLI
 
 
 class TestPyCLI(unittest.TestCase):
