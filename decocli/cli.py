@@ -1,3 +1,5 @@
+import types
+
 from decocli.cmd import Command
 from decocli.param import Param
 from decocli.parser import Parser
@@ -20,6 +22,11 @@ class CLI:
                 CLI.parser.set_cmd(func.__name__, cmd)
 
             return func
+
+        if isinstance(name, types.FunctionType):
+            f, name = name, None
+            return _func(f)
+
         return _func
 
     @staticmethod

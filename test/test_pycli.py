@@ -78,6 +78,18 @@ class TestPyCLI(unittest.TestCase):
 
         self.assertEqual(1, result, 'No name command Test')
 
+    def test_no_arg_command(self):
+        a = argv
+        a.append('one')
+
+        @CLI.set_cmd
+        def one():
+            return 1
+
+        result = CLI.exec()
+
+        self.assertEqual(1, result, 'No name command Test')
+
 
 if __name__ == '__main__':
     unittest.main()
