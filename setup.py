@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='decocli',
-    version='0.2',
+    version='0.3',
     url='https://github.com/HyeockJinKim/DecoCLI',
     license='MIT',
     author='HyeockJin Kim',
