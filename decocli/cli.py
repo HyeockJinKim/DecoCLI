@@ -3,23 +3,33 @@ from decocli.param import Param
 from decocli.parser import Parser
 
 
-class PyCLI:
-    def __init__(self):
-        self.parser = Parser()
+class CLI:
+    parser = Parser()
 
-    def set_cmd(self, name: str, _len=0):
+    @staticmethod
+    def clear():
+        CLI.parser = Parser()
+
+    @staticmethod
+    def set_cmd(name=None, _len=0):
         def _func(func):
             cmd = Command(func, _len)
-            self.parser.set_cmd(name, cmd)
+            if name:
+                CLI.parser.set_cmd(name, cmd)
+            else:
+                CLI.parser.set_cmd(func.__name__, cmd)
+
             return func
         return _func
 
-    def set_param(self, name: str, key: str, _len=0):
+    @staticmethod
+    def set_param(name: str, key: str, _len=0):
         param = Param(key, _len)
-        self.parser.set_param(name, param)
+        CLI.parser.set_param(name, param)
 
-    def exec(self):
-        funcs, params = self.parser.parse()
+    @staticmethod
+    def exec():
+        funcs, params = CLI.parser.parse()
         results = []
         for func in funcs:
             results.append(func.exec(params))
