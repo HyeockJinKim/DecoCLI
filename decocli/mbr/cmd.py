@@ -1,8 +1,7 @@
 
 class Command:
-    def __init__(self, _func, _len):
+    def __init__(self, _func):
         self.func = _func
-        self.len = _len
 
     def exec(self, params=None):
         try:
