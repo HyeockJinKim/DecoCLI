@@ -1,12 +1,28 @@
 import types
+from sys import argv
 
 from decocli.mbr.cmd import Command
 from decocli.mbr.param import Param
 from decocli.mbr.parser import Parser
+from decocli.mbr.subcli import SubCLI
+
+
+def _cli():
+    for cmd in argv[1:]:
+        yield cmd
 
 
 class CLI:
-    parser = Parser()
+
+    parser = Parser(_cli())
+
+    @staticmethod
+    def add_sub_cli(sub_cli: SubCLI):
+        """
+
+        :return:
+        """
+        CLI.parser.add_sub(sub_cli)
 
     @staticmethod
     def clear():
@@ -15,7 +31,11 @@ class CLI:
         :return: None
         """
 
-        CLI.parser = Parser()
+        def _cli():
+            for cmd in argv[1:]:
+                yield cmd
+
+        CLI.parser = Parser(_cli())
 
     @staticmethod
     def set_cmd(name=None, _len=0):
@@ -61,7 +81,10 @@ class CLI:
         :return: results of commands
         """
 
-        funcs, params = CLI.parser.parse()
+        funcs, params, flag = CLI.parser.parse()
+        if flag is 0:
+            print('There is command that is not set in CLI')
+            exit(-1)
         results = []
         for func in funcs:
             results.append(func.exec(params))

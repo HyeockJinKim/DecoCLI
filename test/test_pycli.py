@@ -2,6 +2,7 @@ import unittest
 from sys import argv
 
 from decocli.cli import CLI
+from decocli.mbr.subcli import SubCLI
 
 
 class TestPyCLI(unittest.TestCase):
@@ -89,6 +90,44 @@ class TestPyCLI(unittest.TestCase):
         result = CLI.exec()
 
         self.assertEqual(1, result, 'No name command Test')
+
+    def test_list_namespace_command1(self):
+        a = argv
+        a.append('get')
+        a.append('one')
+        get = SubCLI('get')
+
+        @get.set_cmd('one')
+        def one():
+            return 1
+
+        @get.set_cmd('two')
+        def two():
+            return 2
+
+        CLI.add_sub_cli(get)
+        result = CLI.exec()
+
+        self.assertEqual(1, result, 'List Namespace command Test1')
+
+    def test_list_namespace_command2(self):
+        a = argv
+        a.append('get')
+        a.append('two')
+        get = SubCLI('get')
+
+        @get.set_cmd('one')
+        def one():
+            return 1
+
+        @get.set_cmd('two')
+        def two():
+            return 2
+
+        CLI.add_sub_cli(get)
+        result = CLI.exec()
+
+        self.assertEqual(2, result, 'List Namespace command Test2')
 
 
 if __name__ == '__main__':
