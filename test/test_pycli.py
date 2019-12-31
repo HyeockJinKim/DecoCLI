@@ -1,6 +1,7 @@
 import unittest
 from sys import argv
 
+from decocli.api import cli_class
 from decocli.cli import CLI
 from decocli.mbr.subcli import SubCLI
 
@@ -128,6 +129,54 @@ class TestPyCLI(unittest.TestCase):
         result = CLI.exec()
 
         self.assertEqual(2, result, 'List Namespace command Test2')
+
+    def test_class_cli_api1(self):
+        a = argv
+        a.append('one')
+        CLI.clear()
+
+        @cli_class
+        class A:
+            def one(self):
+                return 1
+
+            def two(self):
+                return 2
+
+        result = CLI.exec()
+        self.assertEqual(1, result, 'Class CLI TEST')
+
+    def test_class_cli_api2(self):
+        a = argv
+        a.append('two')
+        CLI.clear()
+
+        @cli_class
+        class A:
+            def one(self):
+                return 1
+
+            def two(self):
+                return 2
+
+        result = CLI.exec()
+        self.assertEqual(2, result, 'Class CLI TEST')
+
+    def test_class_cli_api3(self):
+        a = argv
+        a.append('num')
+        CLI.clear()
+
+        @cli_class
+        class A:
+            def __init__(self):
+                self.num = 3
+
+            def num(self):
+                return self.num
+
+        result = CLI.exec()
+        self.assertEqual(3, result, 'Class CLI TEST')
 
 
 if __name__ == '__main__':

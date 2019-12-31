@@ -38,7 +38,7 @@ class CLI:
         CLI.parser = Parser(_cli())
 
     @staticmethod
-    def set_cmd(name=None, _len=0):
+    def set_cmd(name=None, default=None):
         """
         Set command for using in CLI function
         :param name: command name used in CLI
@@ -47,7 +47,7 @@ class CLI:
         """
 
         def _func(func):
-            cmd = Command(func)
+            cmd = Command(func, default)
             if name:
                 CLI.parser.set_cmd(name, cmd)
             else:
@@ -86,6 +86,7 @@ class CLI:
             print('There is command that is not set in CLI')
             exit(-1)
         results = []
+
         for func in funcs:
             results.append(func.exec(params))
 
