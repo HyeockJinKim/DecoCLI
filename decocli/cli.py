@@ -94,3 +94,18 @@ class CLI:
             return results[0]
 
         return results
+
+    @staticmethod
+    def exec_seq():
+        funcs, params, flag = CLI.parser.parse()
+        if flag is 0:
+            print('There is command that is not set in CLI')
+            exit(-1)
+        res = None
+
+        for func in funcs:
+            cur = func.exec(params)
+            if cur is not None:
+                res = cur
+
+        return res
