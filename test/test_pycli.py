@@ -198,6 +198,29 @@ class TestPyCLI(unittest.TestCase):
         result = CLI.exec_seq()
         self.assertEqual(4, result, 'Class CLI TEST')
 
+    def test_class_cli_api5(self):
+        a = argv
+        CLI.clear()
+
+        a.append('get')
+        a.append('--n')
+        a.append('2')
+        a.append('num')
+
+        @cli_class
+        class A:
+            def __init__(self):
+                self.num = 3
+
+            def get(self, n):
+                self.num = int(n)
+
+            def num(self):
+                return self.num
+
+        result = CLI.exec_seq()
+        self.assertEqual(2, result, 'Class CLI params TEST')
+
 
 if __name__ == '__main__':
     unittest.main()

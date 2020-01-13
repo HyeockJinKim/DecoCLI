@@ -17,14 +17,18 @@ class Command:
 
     def exec(self, params: dict=None):
         if params is None:
-            params = self.default_param
-
+            params = {}
         for param in self.default_param.keys():
             params.setdefault(param, self.default_param[param])
 
+        for param in list(params.keys()):
+            if param not in self.param_names:
+                del params[param]
+
         try:
             return self.func(**params)
-        except TypeError:
+        except TypeError as e:
+            print(params)
             pass
         try:
             return self.func()
