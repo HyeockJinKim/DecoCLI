@@ -21,9 +21,10 @@ class Command:
         for param in self.default_param.keys():
             params.setdefault(param, self.default_param[param])
 
-        for param in list(params.keys()):
-            if param not in self.param_names:
-                del params[param]
+        if 'kwargs' not in self.param_names:
+            for param in list(params.keys()):
+                if param not in self.param_names:
+                    del params[param]
 
         try:
             return self.func(**params)

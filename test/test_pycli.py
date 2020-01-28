@@ -61,6 +61,7 @@ class TestPyCLI(unittest.TestCase):
 
         @CLI.set_cmd('setup')
         def setup(**kwargs):
+            print(kwargs)
             api = API(kwargs['name'])
             return api.name()
 
